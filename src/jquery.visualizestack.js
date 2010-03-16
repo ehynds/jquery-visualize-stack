@@ -71,7 +71,7 @@
 		properties: {
 			"background": "%"
 		},
-		invertTextColor: "#fff"
+		invertTextColor: ""
 	};
 
 })(jQuery);
