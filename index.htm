@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>jQuery Visualize Stack</title>
+
+<style type="text/css">
+body { font:12px Helvetica, Arial, sans-serif }
+div { position:relative; padding:20px 15px; width:500px }
+
+#x { border:1px solid #000 }
+#a { z-index:10 }
+#b { z-index:20; top:-15px; left:15px }
+#c { z-index:20; top:-30px; left:30px }
+#d { z-index:40; top:-45px; left:45px }
+#e { z-index:50; top:-60px; left:60px }
+#f { z-index:60; top:-75px; left:75px }
+#g { z-index:70; top:-90px; left:90px }
+#h { z-index:70; top:-105px; left:105px }
+</style>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="src/jquery.visualizestack.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#examples div").visualizeStack({
+		properties: {
+			background: "%",
+			border: "1px solid #000"
+		}
+	})
+	.html(function(){
+		return 'z-index: ' + $(this).css("z-index");
+	});
+});
+</script>
+
+</head>
+<body>
+
+<div id="examples">
+	<div id="a"></div>
+	<div id="b"></div>
+	<div id="c"></div>
+	<div id="d"></div>
+	<div id="e"></div>
+	<div id="f"></div>
+	<div id="g"></div>
+	<div id="h"></div>
+</div>
+
+<div id="x">This div doesn't get to play along.</div>
+
+</body>
+</html>
