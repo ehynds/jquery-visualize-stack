@@ -3,6 +3,8 @@
 $.fn.visualizeStack = function(options){
 	options = $.extend({}, $.fn.visualizeStack.defaults, options);
 
+	var zindexes = [];
+	
 	// We only want to keep elements that have a legitimate z-index.
 	// If this plugin is called like $("div").visualizeStack(), for 
 	// example, not all divs in that selection could have a set z-index.
@@ -13,16 +15,23 @@ $.fn.visualizeStack = function(options){
 		return /^-?\d+$/.test( $(this).css("z-index") );
 	})
 
-	// Take those filtered elements and make an array of objects.  The 
-	// "element" key will be a jQuerified element, and the "stack" key 
+	// Take those filtered elements and return an array of objects.  The 
+	// "element" key will be a DOM element, and the "stack" key 
 	// will be the z-index.  
 	//
-	// Ultimately we want to create an array sorted 
-	// in order of z-indexes, from lowest to hightest. But, we also need 
+	// Ultimately we want to create an array sorted in order of 
+	// z-indexes, from lowest to hightest. But, we also need 
 	// to remember which element had which z-index; an array of just 
 	// z-indexes or just elements does not help us. 
-	.map(function(i,elem){
-		return { element:elem, stack:parseFloat($(this).css("z-index")) };
+	.map(function(){
+		var val = parseFloat( $(this).css("z-index") );
+		
+		// add this zindex to an array of just z-indexes.  we'll later take this
+		// array and determine how many of them are unique.
+		zindexes.push( val );
+		
+		// return an object of the z-index and element
+		return { element:this, stack:val };
 	})
 
 	// Turn this mapped jQuery object into a pure-javascript array of 
@@ -37,12 +46,13 @@ $.fn.visualizeStack = function(options){
 		return a.stack === b.stack ? 0 : (a.stack < b.stack ? -1 : 1);
 	});
 	
+	
 	// nothing found?  bail.
 	if(!this.length || !elems.length){
 		return this;
 	}
 	
-	// the last "hue" number will be recorded here.  We'll start with 90.
+	// the last "lightness" number will be recorded here.  We'll start with 90.
 	var lastColor = 90, 
 
 		// the last z-index level will be recorded here.  Start with the first
@@ -59,12 +69,10 @@ $.fn.visualizeStack = function(options){
 	// figure out how many unique z-index there are
 	var uniqueStacks = (function(){
 	
-		// $.map will return a new array of only the z-indexes from
-		// our array of objects.
-		var stacks = $.map(elems, function(obj){ return obj.stack; }), 
-			uniques = [];
+		// where we'll store the unique z-indexes
+		var uniques = [];
 	
-		$.each(stacks, function(i,val){
+		$.each(zindexes, function(i,val){
 			if($.inArray(val, uniques) === -1){
 				uniques.push(val);
 			}
