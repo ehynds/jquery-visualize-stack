@@ -57,16 +57,11 @@ $(function(){
 	.bind("keydown", function(){ // detect changes
 		var $this = $(this), 
 			props = { "z-index": this.value };
-			
-		// if auto, the background color won't be removed since this thing is interactive.
-		if(this.value === "auto"){
-			props.background = "none";
-			props.color = "#000"
-		}
 		
 		$this.parent().css(props);
 		divs.visualizeStack(options);
 	});
+	
 });
 </script>
 
