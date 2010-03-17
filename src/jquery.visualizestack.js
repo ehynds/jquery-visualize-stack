@@ -8,9 +8,9 @@ $.fn.visualizeStack = function(options){
 	// example, not all divs in that selection could have a set z-index.
 	//
 	// Because the default z-index property value is "auto" we can
-	// safely assume a z-index was set if the value is numeric and not auto.
+	// safely assume a z-index was set if the value is numeric
 	var elems = this.filter(function(){
-		return /^(-?\d+|auto)$/.test( $(this).css("z-index") );
+		return /^-?\d+$/.test( $(this).css("z-index") );
 	})
 
 	// Take those filtered elements and make an array of objects.  The 

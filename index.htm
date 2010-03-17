@@ -58,6 +58,11 @@ $(function(){
 		var $this = $(this), 
 			props = { "z-index": this.value };
 		
+		if(this.value === "auto"){
+			props.color = "#000";
+			props.background = "none"
+		}
+		
 		$this.parent().css(props);
 		divs.visualizeStack(options);
 	});
