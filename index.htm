@@ -1,35 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>jQuery Visualize Stack</title>
+<title>jQuery Visualize Stack - Eric Hynds</title>
 
 <style type="text/css">
-body { font:12px Helvetica, Arial, sans-serif }
-div { position:relative; padding:20px 15px; width:500px }
+html, body { margin:0; padding:0; font:12px Helvetica, Arial, sans-serif }
+#content { padding:10px 30px; }
+a { color:#477099; text-decoration:none }
+a:hover { text-decoration:underline }
 
+#bar { background:#252823; padding:5px 10px; border-bottom:4px solid #C3D3DA }
+#bar h1 { margin:0; padding:0; color:#fff; font-size:40px; letter-spacing:-1px; text-shadow:0 0 4px #000000 }
+#bar h1 span { color:#C3D3DA }
+#bar div { float:right; margin-top:-50px; padding:20px 20px 0 0 }
+#bar a { color:#fff; text-decoration:none }
+#bar div a:hover { text-decoration:underline }
+
+#examples { width:900px; border:1px solid #ccc; padding:10px; background:#f7f7f7 }
+#examples div { position:relative; padding:15px 15px; width:200px }
+#examples input { width:50px; border:1px solid #000; padding:3px }
 #x { border:1px solid #000 }
-#a { z-index:10 }
-#b { z-index:20; top:-15px; left:15px }
-#c { z-index:20; top:-30px; left:30px }
-#d { z-index:40; top:-45px; left:45px }
-#e { z-index:50; top:-60px; left:60px }
-#f { z-index:60; top:-75px; left:75px }
-#g { z-index:70; top:-90px; left:90px }
-#h { z-index:70; top:-105px; left:105px }
+#a { z-index:10; top:-15px }
+#b { z-index:20; top:-30px; left:55px }
+#c { z-index:20; top:-40px; left:30px }
+#d { z-index:15; top:-55px; left:15px }
+#e { z-index:25; top:-60px; left:60px }
+#f { z-index:18; top:-75px; left:75px }
+#g { z-index:5; top:-90px; left:90px }
+#h { z-index:5; top:0; left:105px }
 </style>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
 <script type="text/javascript" src="src/jquery.visualizestack.js"></script>
 <script type="text/javascript">
 $(function(){
-	$("#examples div").visualizeStack({
+
+	var options = {
 		properties: {
 			background: "%",
 			border: "1px solid #000"
-		}
+		},
+		lightTextColor: "#fff"
+	};
+
+	var divs = $("#examples div").visualizeStack(options).draggable({ containment:"parent" });
+	
+	// set the initial z-index values
+	divs.find("input").each(function(){
+		var $this = $(this);
+		$this.val( $this.parent().css("z-index") );
 	})
-	.html(function(){
-		return 'z-index: ' + $(this).css("z-index");
+	
+	// and detect changes
+	.bind("keydown", function(){
+		var $this = $(this), 
+			props = { "z-index": this.value };
+			
+		// if auto, the background color won't be removed since this thing is interactive.
+		if(this.value === "auto"){
+			props.background = "none";
+			props.color = "#000"
+		}
+		
+		$this.parent().css(props);
+		divs.visualizeStack(options);
 	});
 });
 </script>
@@ -37,18 +72,33 @@ $(function(){
 </head>
 <body>
 
-<div id="examples">
-	<div id="a"></div>
-	<div id="b"></div>
-	<div id="c"></div>
-	<div id="d"></div>
-	<div id="e"></div>
-	<div id="f"></div>
-	<div id="g"></div>
-	<div id="h"></div>
+<div id="bar">
+	<h1><a href="http://www.erichynds.com">eric<span>hynds</span></a></h1>
+	<div><a href="http://www.erichynds.com/jquery/visualizing-your-z-index-stacks-with-jquery">&laquo; Return to Blog Post</a></div>
 </div>
 
-<div id="x">This div doesn't get to play along.</div>
+<div id="content">
+	<h2>jQuery Visualize Stack Demo</h2>
+	<p>This plugin applies various shades of a color to elements based on their z-index value, relative to the z-index of other elements.</p>
+
+	<ul style="margin-bottom:12px">
+	<li><a href="http://www.erichynds.com/jquery/visualizing-your-z-index-stacks-with-jquery/">Return to the blog post</a></li>
+	<li><a class="blank" href="http://github.com/ferric84/jquery-visualize-stack">Get the code</a> and follow this project on GitHub</li>
+	<li><a href="http://www.erichynds.com/visualizing-your-z-index-stacks-with-jquery/#bookmarklet">Get the bookmarklet</a></li>
+	</ul>
+	
+	<p style="margin:20px 0 5px 0"><b>Use the tab key to move between inputs &amp; to visually refresh the stack.</b> Try entering &quot;auto&quot; as a value, and dragging the divs around.</p>
+	<form id="examples">
+		<div id="h">z-index: <input type="text" name="value" /></div>
+		<div id="a">z-index: <input type="text" name="value" /></div>
+		<div id="b">z-index: <input type="text" name="value" /></div>
+		<div id="c">z-index: <input type="text" name="value" /></div>
+		<div id="d">z-index: <input type="text" name="value" /></div>
+		<div id="e">z-index: <input type="text" name="value" /></div>
+		<div id="f">z-index: <input type="text" name="value" /></div>
+		<div id="g">z-index: <input type="text" name="value" /></div>
+	</form>
+</div>
 
 </body>
 </html>
