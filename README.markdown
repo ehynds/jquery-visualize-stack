@@ -34,4 +34,4 @@ Call the visualizeStack() method on a jQuery object.  The plugin will internally
 		});
 	
 	});
-
+	

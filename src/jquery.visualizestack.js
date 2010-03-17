@@ -127,7 +127,8 @@ $.fn.visualizeStack.defaults = {
 	properties: {
 		"background": "%"
 	},
-	lightTextColor: ""
+	lightTextColor: "",
+	darkTextColor: ""
 };
 
 // close the wrapping closure, passing in jQuery so $ can be used
