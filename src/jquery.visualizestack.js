@@ -3,7 +3,8 @@
 $.fn.visualizeStack = function(options){
 	options = $.extend({}, $.fn.visualizeStack.defaults, options);
 
-	var zindexes = [];
+	// this array will hold all the z-index values
+	var zindexes = [],
 	
 	// We only want to keep elements that have a legitimate z-index.
 	// If this plugin is called like $("div").visualizeStack(), for 
@@ -11,7 +12,7 @@ $.fn.visualizeStack = function(options){
 	//
 	// Because the default z-index property value is "auto" we can
 	// safely assume a z-index was set if the value is numeric
-	var elems = this.filter(function(){
+	elems = this.filter(function(){
 		return /^-?\d+$/.test( $(this).css("z-index") );
 	})
 
@@ -25,11 +26,11 @@ $.fn.visualizeStack = function(options){
 	// z-indexes or just elements does not help us. 
 	.map(function(){
 		var val = parseFloat( $(this).css("z-index") );
-		
-		// add this zindex to an array of just z-indexes.  we'll later take this
-		// array and determine how many of them are unique.
+	
+		// add this zindex to an array of just z-indexes.  we'll later use this
+		// array to determine how many of them are unique.
 		zindexes.push( val );
-		
+	
 		// return an object of the z-index and element
 		return { element:this, stack:val };
 	})
@@ -68,16 +69,16 @@ $.fn.visualizeStack = function(options){
 
 	// figure out how many unique z-index there are
 	var uniqueStacks = (function(){
-	
+
 		// where we'll store the unique z-indexes
 		var uniques = [];
-	
+
 		$.each(zindexes, function(i,val){
 			if($.inArray(val, uniques) === -1){
 				uniques.push(val);
 			}
 		});
-	
+
 		return uniques.length;
 	})();
 
