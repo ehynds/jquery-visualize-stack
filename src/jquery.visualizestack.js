@@ -89,9 +89,9 @@ $.fn.visualizeStack = function(options){
 		// jQuerify our element
 		var $element = $(obj.element),
 	
-			// determine the shade of color to use.  if this z-index
-			// is the same as the last z-index use the last color.
-			// otherwise create a new color
+			// determine the lightness value.  if this z-index
+			// is the same as the last z-index, use the last lightness
+			// value.  otherwise, create a new, darker shade
 			color = lastColor = (obj.stack === lastStack) 
 				? lastColor 
 				: lastColor-(100/uniqueStacks);
@@ -99,8 +99,9 @@ $.fn.visualizeStack = function(options){
 		// loop through the CSS properties to add
 		$.each(options.properties, function(prop, val){
 		
-			// replace the percent sign in that property value with the
-			// hsl() color.
+			// replace the percent sign in the property value with the
+			// hsl() color.  "background-color: %" will become
+			// "background-color: hsl(h, s, l)"
 			$element.css(prop, val.replace("%", "hsl("+startHue+",100%,"+color+"%)") );
 		
 			// change the text color property when the shade becomes 
