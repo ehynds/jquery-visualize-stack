@@ -36,24 +36,25 @@ a:hover { text-decoration:underline }
 <script type="text/javascript">
 $(function(){
 
+	// properties to pass into this plugin
 	var options = {
 		properties: {
 			background: "%",
 			border: "1px solid #000"
 		},
-		lightTextColor: "#fff"
+		lightTextColor: "#fff",
+		darkTextColor: "#000"
 	};
-
-	var divs = $("#examples div").visualizeStack(options).draggable({ containment:"parent" });
 	
-	// set the initial z-index values
-	divs.find("input").each(function(){
+	var divs = $("#examples div").visualizeStack(options).draggable({ containment:"parent" })
+	
+	divs
+	.find("input") // find the inputs
+	.each(function(){ // set the initial z-index values based on the input values
 		var $this = $(this);
 		$this.val( $this.parent().css("z-index") );
 	})
-	
-	// and detect changes
-	.bind("keydown", function(){
+	.bind("keydown", function(){ // detect changes
 		var $this = $(this), 
 			props = { "z-index": this.value };
 			
@@ -79,7 +80,8 @@ $(function(){
 
 <div id="content">
 	<h2>jQuery Visualize Stack Demo</h2>
-	<p>This plugin applies various shades of a color to elements based on their z-index value, relative to the z-index of other elements.</p>
+	<p>This plugin applies various shades of a color to elements based on their z-index value, relative to the z-index of other elements.  Useful
+	for developers trying to debug CSS z-index stacking issues.</p>
 
 	<ul style="margin-bottom:12px">
 	<li><a href="http://www.erichynds.com/jquery/visualizing-your-z-index-stacks-with-jquery/">Return to the blog post</a></li>

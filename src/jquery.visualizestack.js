@@ -94,11 +94,14 @@ $.fn.visualizeStack = function(options){
 			// hsl() color.
 			$element.css(prop, val.replace("%", "hsl("+startHue+",100%,"+color+"%)") );
 		
-			// If denoted in options.lightTextColor, change the text color 
-			// property when the shade becomes too dark to read
+			// if the properties are set, change the text color property 
+			// when the shade becomes too light or dark to read
 			if(options.lightTextColor.length && lastColor <= 50){
 				$element.css("color", options.lightTextColor);
+			} else if(options.darkTextColor.length && lastColor >= 50){
+				$element.css("color", options.darkTextColor);
 			}
+
 		});
 	
 		// remember what the last z-index value was
