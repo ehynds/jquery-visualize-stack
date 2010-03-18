@@ -2,20 +2,8 @@
 <html>
 <head>
 <title>jQuery Visualize Stack - Eric Hynds</title>
-
+<link type="text/css" rel="stylesheet" href="http://www.erichynds.com/examples/style.css" />
 <style type="text/css">
-html, body { margin:0; padding:0; font:12px Helvetica, Arial, sans-serif }
-#content { padding:10px 30px; }
-a { color:#477099; text-decoration:none }
-a:hover { text-decoration:underline }
-
-#bar { background:#252823; padding:5px 10px; border-bottom:4px solid #C3D3DA }
-#bar h1 { margin:0; padding:0; color:#fff; font-size:40px; letter-spacing:-1px; text-shadow:0 0 4px #000000 }
-#bar h1 span { color:#C3D3DA }
-#bar div { float:right; margin-top:-50px; padding:20px 20px 0 0 }
-#bar a { color:#fff; text-decoration:none }
-#bar div a:hover { text-decoration:underline }
-
 #examples { width:900px; border:1px solid #ccc; padding:10px; background:#f7f7f7 }
 #examples div { position:relative; padding:15px 15px; width:200px }
 #examples input { width:50px; border:1px solid #000; padding:3px }
@@ -81,6 +69,12 @@ $(function(){
 
 <div id="content">
 	<h2>jQuery Visualize Stack Demo</h2>
+	
+	<div class="message notice">
+		<div class="message-title">Attention IE Users!</div>
+		<div class="message-body">This demo only works in browsers that support CSS3's hsl() coloring.  Currently, that is limited to Firefox 3, Chrome, Opera 9+, and Safari 3+.</div>
+	</div> 
+	
 	<p>This plugin applies various shades of a color to elements based on their z-index value, relative to the z-index of other elements.  Useful
 	for developers trying to debug CSS z-index stacking issues.</p>
 
