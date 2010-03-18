@@ -3,16 +3,13 @@
 $.fn.visualizeStack = function(options){
 	options = $.extend({}, $.fn.visualizeStack.defaults, options);
 
-	// this array will hold all the z-index values
-	var zindexes = [],
-	
 	// We only want to keep elements that have a legitimate z-index.
 	// If this plugin is called like $("div").visualizeStack(), for 
 	// example, not all divs in that selection could have a set z-index.
 	//
 	// Because the default z-index property value is "auto" we can
 	// safely assume a z-index was set if the value is numeric
-	elems = this.filter(function(){
+	var elems = this.filter(function(){
 		return /^-?\d+$/.test( $(this).css("z-index") );
 	})
 
@@ -25,14 +22,7 @@ $.fn.visualizeStack = function(options){
 	// to remember which element had which z-index; an array of just 
 	// z-indexes or just elements does not help us. 
 	.map(function(){
-		var val = parseFloat( $(this).css("z-index") );
-	
-		// add this zindex to an array of just z-indexes.  we'll later use this
-		// array to determine how many of them are unique.
-		zindexes.push( val );
-	
-		// return an object of the z-index and element
-		return { element:this, stack:val };
+		return { element:this, stack:parseFloat($(this).css("z-index")) };
 	})
 
 	// Turn this mapped jQuery object into a pure-javascript array of 
@@ -73,9 +63,9 @@ $.fn.visualizeStack = function(options){
 		// where we'll store the unique z-indexes
 		var uniques = [];
 
-		$.each(zindexes, function(i,val){
-			if($.inArray(val, uniques) === -1){
-				uniques.push(val);
+		$.each(elems, function(i,obj){
+			if($.inArray(obj.stack, uniques) === -1){
+				uniques.push(obj.stack);
 			}
 		});
 
