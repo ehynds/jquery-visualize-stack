@@ -1,6 +1,6 @@
 # jQuery Visualize Stack
 
-[View an interactive demo](http://www.erichynds.com/examples/jquery-visualize-stack/)
+[View an interactive demo](http://www.erichynds.com/examples/jquery-visualize-stack/) 
 [Read the related blog post](http://www.erichynds.com/jquery/visualizing-your-z-index-stacks-with-jquery/)
 
 This plugin apply various shades of a color to elements stacked with z-index in order of their z-index level.  Useful if you have multiple
